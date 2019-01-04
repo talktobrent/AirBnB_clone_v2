@@ -54,7 +54,7 @@ Ex:
 `City.show(my_city_id)`
 
 ## Original Author
-Kevin Yook
+* Kevin Yook
 -----------------
 
 # Airbnb Clone v2
