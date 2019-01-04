@@ -77,5 +77,5 @@ Ex:
 ## Tests
 
 ## Authors
-Heindrick Cheung
-Brent Janski
+* Heindrick Cheung
+* Brent Janski
