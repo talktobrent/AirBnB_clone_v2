@@ -43,6 +43,13 @@ class HBNBCommand(cmd.Cmd):
                 raise SyntaxError()
             my_list = line.split(" ")
             obj = eval("{}()".format(my_list[0]))
+
+            # This is where I added code: take all value after 
+            attrs = my_list[1:]
+            for attr in attrs:
+                kv = attr.split("=")
+                obj.__dict__[kv[0]] = eval(kv[1].replace("_", " "))
+            # End of my new code
             obj.save()
             print("{}".format(obj.id))
         except SyntaxError:
