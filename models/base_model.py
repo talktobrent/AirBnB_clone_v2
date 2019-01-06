@@ -4,6 +4,7 @@ import uuid
 import models
 from datetime import datetime
 
+Base = declarative_base()
 
 class BaseModel:
     """This class will defines all common attributes/methods
