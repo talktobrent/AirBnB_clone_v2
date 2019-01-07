@@ -48,23 +48,19 @@ class DBStorage:
     def new(self, obj):
         """ insert new object in current database session """
 
-        __session.add(obj)
+        self.__session.add(obj)
 
     def save(self):
         """ commit changes to database """
 
-        __session.commit()
+        self.__session.commit()
 
     def delete(self, obj=None):
         """ delete from current database session """
 
         if obj:
-            __session.delete(obj)
+            self.__session.delete(obj)
 
     def reload(self):
         """ reload database """
-
-
-
-
-
+        
