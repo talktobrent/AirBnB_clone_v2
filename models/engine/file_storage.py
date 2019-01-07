@@ -63,7 +63,6 @@ class FileStorage:
             for k, v in self.__objects.items():
                 if obj == v:
                     self.__objects.pop(k)
-                    self.save()
                     break
         else:
             return
