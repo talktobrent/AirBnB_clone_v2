@@ -9,7 +9,8 @@ from models.amenity import Amenity
 from models.place import Place
 from models.review import Review
 from sqlalchemy import create_engine
-from sqlalchemy.orm import Session
+from sqlalchemy.orm import Session, sessionmaker
+
 import os
 
 
@@ -63,4 +64,8 @@ class DBStorage:
 
     def reload(self):
         """ reload database """
-        
+
+        Base.metadata.create_all(self.__engine)
+
+        Session = sessionmaker(bind=self.__engine, expire_on_commit=False)
+        session = Session()
