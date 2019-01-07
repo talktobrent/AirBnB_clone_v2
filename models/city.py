@@ -3,6 +3,7 @@
 from models.base_model import BaseModel
 from models.base_model import Base
 from sqlalchemy import Column, Integer, String, ForeignKey
+from sqlalchemy.orm import relationship
 import os
 
 class City(BaseModel, Base):
@@ -12,11 +13,9 @@ class City(BaseModel, Base):
         name: input name
     """
 
-    # declare tablename regardless ????? confirm
-    __tablename__ = 'cities'
-
     # check if environmental variable from cmd, please confirm if state_id is correct
     if os.getenv('HBNB_TYPE_STORAGE') == 'db':
+        __tablename__ = 'cities'
         name = Column(String(128), nullable=False)
         state_id = Column(String(60), ForeignKey("states.id"), nullable=False)
     else:

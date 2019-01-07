@@ -2,7 +2,7 @@
 """This is the state class"""
 from models.base_model import BaseModel
 from models.base_model import Base
-from sqlalchemy import Column, Integer, String, ForeignKey
+from sqlalchemy import Column, String, ForeignKey
 from sqlalchemy.orm import relationship
 import os
 
@@ -12,10 +12,10 @@ class State(BaseModel, Base):
         name: input name
     """
 
-    __tablename__ = "states"
     if os.getenv('HBNB_TYPE_STORAGE') == 'db':
+        __tablename__ = "states"
         name = Column(String(128), nullable=False)
-        cities = relationship("City", back_populates="state", cascade="all, delete-orphan")
+        cities = relationship("City", backref="state", cascade="delete")
     else:
         name = ""
 
