@@ -7,7 +7,10 @@ from models.state import State
 fs = FileStorage()
 
 # All States
-print("All States: {}".format(fs.all(State)))
+all_states = fs.all(State)
+print("All States: {}".format(len(all_states.keys())))
+for state_key in all_states.keys():
+    print(all_states[state_key])
 
 # Create a new State
 new_state = State()
@@ -17,10 +20,16 @@ fs.save()
 print("New State: {}".format(new_state))
 
 # All States
-print("All States: {}".format(fs.all(State)))
+all_states = fs.all(State)
+print("All States: {}".format(len(all_states.keys())))
+for state_key in all_states.keys():
+    print(all_states[state_key])
 
 # Delete the new State
 fs.delete(new_state)
 
 # All States
-print("All States: {}".format(fs.all(State)))
+all_states = fs.all(State)
+print("All States: {}".format(len(all_states.keys())))
+for state_key in all_states.keys():
+    print(all_states[state_key])
