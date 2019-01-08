@@ -28,7 +28,7 @@ class FileStorage:
         if cls is None:
             return self.__objects
         else:
-            return {k: v for k, v in self.__objects.items() if v.__class__ == cls}
+            return {k: v for k, v in self.__objects.items() if type(v) == cls}
 
     def new(self, obj):
         """sets __object to given obj
