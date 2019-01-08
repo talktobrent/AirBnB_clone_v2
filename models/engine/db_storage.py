@@ -38,9 +38,11 @@ class DBStorage:
         """ get dictionary of all objects """
 
         if cls is None:
-            return ["{}.{}".format(type(obj).__name__, obj.id): obj
-                    for obj in self.__session.query(User, State,
-                    City, Amenity, Place, Review).all()]
+            all_list = []
+            for x in BaseModel.__subclasses__():
+                all_list.extend(self.__session.query(x).all())
+            return {"{}.{}".format(type(obj).__name__, obj.id): obj
+                    for obj in all_list}
 
         return {"{}.{}".format(type(obj).__name__, obj.id): obj
                 for obj in self.__session.query(cls).all()}
