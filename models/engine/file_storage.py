@@ -60,9 +60,4 @@ class FileStorage:
 
     def delete(self, obj=None):
         if obj:
-            for k, v in self.__objects.items():
-                if obj == v:
-                    self.__objects.pop(k)
-                    break
-        else:
-            return
+            self.__objects.pop(obj.__class__.__name__ + "." + obj.id, None)
