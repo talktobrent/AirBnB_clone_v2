@@ -28,7 +28,7 @@ class FileStorage:
         if cls is None:
             return self.__objects
         else:
-            return {k: v for k, v in self.__objects.items() if v.__class__ == cls}
+            return {k: v for k, v in self.__objects.items() if type(v) == cls}
 
     def new(self, obj):
         """sets __object to given obj
@@ -60,6 +60,7 @@ class FileStorage:
             pass
 
     def delete(self, obj=None):
+        """ deletes object in __objects """
         if obj:
             self.__objects.pop(obj.__class__.__name__ + "." + obj.id, None)
             self.save()
