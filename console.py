@@ -44,7 +44,7 @@ class HBNBCommand(cmd.Cmd):
             my_list = line.split(" ")
             obj = eval("{}()".format(my_list[0]))
 
-            # This is where I added code: take all value after 
+            # This is where I added code: take all value after
             attrs = my_list[1:]
             for attr in attrs:
                 kv = attr.split("=")
@@ -125,7 +125,7 @@ class HBNBCommand(cmd.Cmd):
         Exceptions:
             NameError: when there is no object taht has the name
         """
-        objects = storage.all()
+        objects = storage.all(eval(line.strip()))
         my_list = []
         if not line:
             for key in objects:
