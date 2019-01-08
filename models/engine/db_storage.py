@@ -10,7 +10,6 @@ from models.place import Place
 from models.review import Review
 from sqlalchemy import create_engine
 from sqlalchemy.orm import Session, sessionmaker, scoped_session
-
 import os
 
 
@@ -32,16 +31,16 @@ class DBStorage:
 
         self.__session = Session(self.__engine)
 
-        if os.getenv('HBNB_ENV') == 'test':
+        if os.getenv('HBNB_ENV') is 'test':
             Base.metadata.drop_all(bind=self.__engine)
 
     def all(self, cls=None):
         """ get dictionary of all objects """
 
-        if cls == None:
-            return {"{}.{}".format(type(obj).__name__, obj.id): obj
+        if cls is None:
+            return ["{}.{}".format(type(obj).__name__, obj.id): obj
                     for obj in self.__session.query(User, State,
-                    City, Amenity, Place, Review).all()}
+                    City, Amenity, Place, Review).all()]
 
         return {"{}.{}".format(type(obj).__name__, obj.id): obj
                 for obj in self.__session.query(cls).all()}
