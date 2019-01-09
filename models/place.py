@@ -48,8 +48,7 @@ class Place(BaseModel, Base):
                                  viewonly=False,
                                  back_populates='place_amenities')
 
-        reviews = relationship("Review", backref="places")
-
+        reviews = relationship("Review", backref="place", cascade="delete")
     else:
         city_id = ""
         user_id = ""
@@ -62,3 +61,8 @@ class Place(BaseModel, Base):
         latitude = 0.0
         longitude = 0.0
         amenity_ids = []
+
+    @property
+    def reviews(self):
+        """getter attribute"""
+        return [v for k, v in models.storage.all() if self.id == v.id]
