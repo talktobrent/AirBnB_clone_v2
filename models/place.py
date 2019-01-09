@@ -2,17 +2,17 @@
 """This is the place class"""
 from models.base_model import BaseModel, Base
 from sqlalchemy.orm import relationship
-from sqlalchemy import Column, String, Integer, Float, ForeignKey
+from sqlalchemy import Column, String, Integer, Float, ForeignKey, Table
 import os
 
-place_amenity = Table("place_amenity", Base.metadata,
-                      Column("place_id", String(60),
-                             ForeignKey("places.id"),
-                             primary_key=True, nullable=False),
-                      Column("amenity_id", String(60),
-                             ForeignKey("amenities.id"),
-                             primary_key=True, nullable=False)
-                     )
+#place_amenity = Table("place_amenity", Base.metadata,
+#                      Column("place_id", String(60),
+#                             ForeignKey("places.id"),
+#                             primary_key=True, nullable=False),
+#                      Column("amenity_id", String(60),
+#                             ForeignKey("amenities.id"),
+#                             primary_key=True, nullable=False)
+#                     )
 
 class Place(BaseModel, Base):
     """This is the class for Place
@@ -44,9 +44,8 @@ class Place(BaseModel, Base):
         latitude = Column(Float, nullable=True)
         longitude = Column(Float, nullable=True)
 
-        amenities = relationship("Amenity", secondary=place_amenity,
-                                 viewonly=False,
-                                 back_populates='place_amenities')
+ #       amenities = relationship("Amenity", secondary=place_amenity,
+                                 viewonly=False)
 
         reviews = relationship("Review", backref="place", cascade="delete")
     else:
@@ -66,3 +65,15 @@ class Place(BaseModel, Base):
     def reviews(self):
         """getter attribute"""
         return [v for k, v in models.storage.all() if self.id == v.id]
+
+#    @property
+#    def amenities(self):
+#        """getter attribute"""
+#        return amenity_ids
+
+#    @amenities.setter
+#    def amenities(self, obj):
+#        if isinstance(obj, Amenity) == True:
+#            amenity_ids.append(obj)
+#        else:
+#            return
