@@ -5,6 +5,15 @@ from sqlalchemy.orm import relationship
 from sqlalchemy import Column, String, Integer, Float, ForeignKey
 import os
 
+place_amenity = Table("place_amenity", Base.metadata,
+                      Column("place_id", String(60),
+                             ForeignKey("places.id"),
+                             primary_key=True, nullable=False),
+                      Column("amenity_id", String(60),
+                             ForeignKey("amenities.id"),
+                             primary_key=True, nullable=False)
+                     )
+
 class Place(BaseModel, Base):
     """This is the class for Place
     Attributes:
@@ -17,11 +26,12 @@ class Place(BaseModel, Base):
         max_guest: maximum guest in int
         price_by_night:: pice for a staying in int
         latitude: latitude in flaot
-        longitude: longitude in float
+        longitude: longitude in float2
         amenity_ids: list of Amenity ids
     """
 
     __tablename__ = 'places'
+
     if os.getenv('HBNB_TYPE_STORAGE') == 'db':
         city_id = Column(String(60), ForeignKey("cities.id"), nullable=False)
         user_id = Column(String(60), ForeignKey("users.id"), nullable=False)
@@ -34,7 +44,11 @@ class Place(BaseModel, Base):
         latitude = Column(Float, nullable=True)
         longitude = Column(Float, nullable=True)
 
-#        reviews = relationship("Review", backref="places")
+        amenities = relationship("Amenity", secondary=place_amenity,
+                                 viewonly=False,
+                                 back_populates='place_amenities')
+
+        reviews = relationship("Review", backref="places")
 
     else:
         city_id = ""
