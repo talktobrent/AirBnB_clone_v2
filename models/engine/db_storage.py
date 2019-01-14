@@ -1,7 +1,7 @@
 #!/usr/bin/python3
 """This is the DBStorage class for AirBnB"""
 import json
-from models.base_model import BaseModel, Base
+from models.base_model import Base
 from models.user import User
 from models.state import State
 from models.city import City
@@ -13,7 +13,7 @@ from sqlalchemy.orm import Session, sessionmaker, scoped_session
 import os
 
 
-class DBStorage:
+class DBStorage():
     """ Database storage class """
 
     __engine = None
@@ -29,7 +29,7 @@ class DBStorage:
                                os.getenv('HBNB_MYSQL_DB')),
                                pool_pre_ping=True)
 
-        self.__session = Session(self.__engine)
+        #self.__session = Session(self.__engine)
 
         if os.getenv('HBNB_ENV') is 'test':
             Base.metadata.drop_all(bind=self.__engine)
@@ -62,11 +62,16 @@ class DBStorage:
 
         if obj:
             self.__session.delete(obj)
+            self.save()
 
     def reload(self):
         """ reload database """
 
         Base.metadata.create_all(self.__engine)
-        session_factory = sessionmaker(bind=self.__engine, expire_on_commit=False)
-        Session = scoped_session(session_factory)
+        Session = sessionmaker(bind=self.__engine)
         self.__session = Session()
+
+    def close(self):
+        """close session"""
+
+        self.__session.close()

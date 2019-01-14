@@ -5,6 +5,7 @@ from models.base_model import Base
 from sqlalchemy import Column, String, ForeignKey
 from sqlalchemy.orm import relationship
 import os
+import models
 
 class State(BaseModel, Base):
     """This is the class for State
@@ -15,11 +16,11 @@ class State(BaseModel, Base):
     __tablename__ = "states"
     if os.getenv('HBNB_TYPE_STORAGE') == 'db':
         name = Column(String(128), nullable=False)
-        cities = relationship("City", backref="state", cascade="delete")
+        cities = relationship("City", passive_deletes=True, backref="state")
     else:
         name = ""
 
     @property
     def cities(self):
         """ return list of all objects in storage"""
-        return [v for k, v in models.storage.all() if self.id == v.state_id]
+        return [v for k, v in models.storage.all().items() if self.id == v.state_id]
