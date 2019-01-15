@@ -17,7 +17,7 @@ def do_deploy(archive_path):
         return False
 
     no_path = archive_path.split('/')[-1]
-    no_ext = no_path.rsplit('.', 1)[0]
+    no_ext = no_path.rsplit('.')[0]
 
     try:
         put(local_path=archive_path, remote_path="/tmp/")
