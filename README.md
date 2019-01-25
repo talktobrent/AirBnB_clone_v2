@@ -59,6 +59,7 @@ Ex:
 
 # Airbnb Clone v2
 An update of the orignal, forked clone above, implenting new features:
+
 ## Using a MySQL database for object creation/storage
 - **DBStorage**: (models/engine/db_storage.py)
 	- **all(self, cls=None)**: query all in current database
@@ -66,8 +67,20 @@ An update of the orignal, forked clone above, implenting new features:
 	- **save(self)**: commit all changes of the current database session 
 	- **delete(self, obj=None)**: delete from the current database session obj if not None
 	- **reload(self)**: create all table sin database 
-- Classes that establish, update, and delete relationships among different MySQL tables
-- Updates to console commands to validate and create these new databse objects
+
+## Classes that establish, update, and delete relationships among different MySQL tables
+- User
+- Place
+- Review
+- Amenity
+- City
+- State
+- BaseModel
+
+## Updates to console commands to validate and create these new databse objects
+- do_create(self, arg):
+	- **Command syntax**: create <Class name> <param 1> <param 2> <param 3>...
+	- **Param syntax**: <key name>=<value>
 
 ## Authors
 * Heindrick Cheung
