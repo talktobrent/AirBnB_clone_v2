@@ -58,23 +58,16 @@ Ex:
 -----------------
 
 # Airbnb Clone v2
-
-## Files
-
-
-## Directories
-
-## Purpose
-
-## What features/functionalities we implemented
-
-## Technologies used
-
-## Available Commands
-
-## Scripts
-
-## Tests
+An update of the orignal, forked clone above, implenting new features:
+## - Using a MySQL database for object creation/storage
+	- DBStorage: (models/engine/db_storage.py)
+		- all(self, cls=None): query all in current database
+		- new(self, obj): add the object to the current database session
+		- save(self): commit all changes of the current database session 
+		- delete(self, obj=None): delete from the current database session obj if not None
+		- reload(self): create all table sin database 
+- Classes that establish, update, and delete relationships among different MySQL tables
+- Updates to console commands to validate and create these new databse objects
 
 ## Authors
 * Heindrick Cheung
