@@ -29,7 +29,7 @@ class DBStorage():
                                os.getenv('HBNB_MYSQL_DB')),
                                pool_pre_ping=True)
 
-        self.__session = Session(self.__engine)
+#        self.__session = Session(self.__engine)
 
         if os.getenv('HBNB_ENV') is 'test':
             Base.metadata.drop_all(bind=self.__engine)

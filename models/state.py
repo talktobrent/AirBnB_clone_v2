@@ -18,12 +18,12 @@ class State(BaseModel, Base):
     if os.getenv('HBNB_TYPE_STORAGE') == 'db':
         __tablename__ = "states"
         name = Column(String(128), nullable=False)
-        cities = relationship("City", passive_deletes=True, backref="state")
+        cities = relationship("City", passive_deletes=True, backref="states")
     else:
         name = ""
 
-        @property
-        def cities(self):
-            """ return list of all city objects in storage"""
-            return [v for k, v in models.storage.all(City).items()
-                    if self.id == v.state_id]
+    @property
+    def cities(self):
+        """ return list of all city objects in storage"""
+        return [v for k, v in models.storage.all(City).items()
+                if self.id == v.state_id]
