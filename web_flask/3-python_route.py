@@ -32,5 +32,6 @@ def show_python_text(text="is cool"):
     return ('Python ' + text.replace('_', ' '))
 
 
-app.env = 'development'
-app.run(host='0.0.0.0', port=5000)
+if __name__ == '__main__':
+    app.env = 'development'
+    app.run(host='0.0.0.0', port=5000)
