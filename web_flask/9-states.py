@@ -16,13 +16,14 @@ st_list = [value for key, value in storage.all("State").items()]
 @app.route('/states_list', strict_slashes=False)
 def states_html(id=None):
     """ gets one state and cities, or all states and outputs in html """
+    state_list = [value for key, value in storage.all("State").items()]
     if id:
         state = None
-        for x in st_list:
+        for x in state_list:
             if x.id == id:
                 state = x
         return(render_template('9-states.html', state=state))
-    return(render_template('7-states_list.html', states_list=st_list))
+    return(render_template('7-states_list.html', states_list=state_list))
 
 
 @app.route('/cities_by_states', strict_slashes=False)
