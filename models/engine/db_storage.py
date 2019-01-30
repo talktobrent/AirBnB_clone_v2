@@ -1,7 +1,7 @@
 #!/usr/bin/python3
 """This is the DBStorage class for AirBnB"""
 import json
-from models.base_model import Base
+from models.base_model import Base, BaseModel
 from models.user import User
 from models.state import State
 from models.city import City
@@ -29,7 +29,7 @@ class DBStorage():
                                os.getenv('HBNB_MYSQL_DB')),
                                pool_pre_ping=True)
 
-        #self.__session = Session(self.__engine)
+        self.__session = Session(self.__engine)
 
         if os.getenv('HBNB_ENV') is 'test':
             Base.metadata.drop_all(bind=self.__engine)
@@ -43,6 +43,9 @@ class DBStorage():
                 all_list.extend(self.__session.query(x).all())
             return {"{}.{}".format(type(obj).__name__, obj.id): obj
                     for obj in all_list}
+
+        if type(cls) is str:
+            cls = eval(cls)
 
         return {"{}.{}".format(type(obj).__name__, obj.id): obj
                 for obj in self.__session.query(cls).all()}

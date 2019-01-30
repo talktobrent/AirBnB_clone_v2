@@ -7,7 +7,12 @@ from sqlalchemy.ext.declarative import declarative_base
 from sqlalchemy import Column, Integer, String, DateTime
 import os
 
-Base = declarative_base()
+
+if os.getenv('HBNB_TYPE_STORAGE') == 'db':
+    Base = declarative_base()
+else:
+    class Base:
+        pass
 
 
 class BaseModel:
@@ -15,9 +20,10 @@ class BaseModel:
     for other classes
     """
 
-    id = Column(String(60), primary_key=True)
-    created_at = Column(DateTime, nullable=False, default=datetime.utcnow())
-    updated_at = Column(DateTime, nullable=False, default=datetime.utcnow())
+    if os.getenv('HBNB_TYPE_STORAGE') == 'db':
+        id = Column(String(60), primary_key=True)
+        created_at = Column(DateTime, nullable=False, default=datetime.utcnow())
+        updated_at = Column(DateTime, nullable=False, default=datetime.utcnow())
 
     def __init__(self, *args, **kwargs):
         """Instantiation of base model class
@@ -37,6 +43,11 @@ class BaseModel:
                     setattr(self, key, value)
             if 'id' not in kwargs:
                 setattr(self, 'id', str(uuid.uuid4()))
+            if 'updated_at' not in kwargs:
+                self.updated_at = datetime.utcnow()
+            if 'created_at' not in kwargs:
+                self.created_at = datetime.utcnow()
+
         else:
                 self.id = str(uuid.uuid4())
                 self.created_at = self.updated_at = datetime.utcnow()

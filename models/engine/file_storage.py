@@ -29,6 +29,8 @@ class FileStorage:
         if cls is None:
             return self.__objects
         else:
+            if type(cls) is str:
+                cls = eval(cls)
             return {k: v for k, v in self.__objects.items() if type(v) == cls}
 
     def new(self, obj):
@@ -50,7 +52,7 @@ class FileStorage:
             json.dump(my_dict, f)
 
     def reload(self):
-        """serialize the file path to JSON file path
+        """ deserialize object from JSON file path
         """
         try:
             with open(self.__file_path, 'r', encoding="UTF-8") as f:
@@ -67,3 +69,7 @@ class FileStorage:
             self.save()
         else:
             return
+
+    def close(self):
+        """ calls reload to get current json """
+        self.reload()

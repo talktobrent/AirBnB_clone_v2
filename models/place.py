@@ -1,19 +1,11 @@
 #!/usr/bin/python3
 """This is the place class"""
 from models.base_model import BaseModel, Base
+from models.amenity import Amenity
 from sqlalchemy.orm import relationship
 from sqlalchemy import Column, String, Integer, Float, ForeignKey, Table
 import models
 import os
-
-
-place_amenity = Table("place_amenity", Base.metadata,
-                      Column("place_id", String(60),
-                             ForeignKey("places.id"),
-                             primary_key=True, nullable=False),
-                      Column("amenity_id", String(60),
-                             ForeignKey("amenities.id"),
-                             primary_key=True, nullable=False))
 
 
 class Place(BaseModel, Base):
@@ -32,8 +24,8 @@ class Place(BaseModel, Base):
         amenity_ids: list of Amenity ids
     """
 
-    __tablename__ = 'places'
     if os.getenv('HBNB_TYPE_STORAGE') == 'db':
+        from models.amenity import place_amenity
         __tablename__ = 'places'
         city_id = Column(String(60),
                          ForeignKey('cities.id', ondelete='cascade'),
@@ -54,6 +46,8 @@ class Place(BaseModel, Base):
         amenities = relationship('Amenity', secondary=place_amenity,
                                  viewonly=False)
     else:
+        amenity_ids = []
+
         @property
         def reviews(self):
             """getter attribute"""
@@ -64,7 +58,7 @@ class Place(BaseModel, Base):
         def amenities(self):
             """getter attribute"""
             objs = models.storage.all('Amenity')
-            return [amen for amen in objs.values() if amen.id in amenity_ids]
+            return [amen for amen in objs.values() if amen.id in self.amenity_ids]
 
         @amenities.setter
         def amenities(self, obj):
