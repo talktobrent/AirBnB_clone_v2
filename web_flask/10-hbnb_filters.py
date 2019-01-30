@@ -20,7 +20,7 @@ def hbnb_html():
 
 
 @app.teardown_appcontext
-def closer():
+def closer(self):
     """ closes storage """
     storage.close()
 
