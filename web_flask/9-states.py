@@ -17,9 +17,11 @@ st_list = [value for key, value in storage.all("State").items()]
 def states_html(id=None):
     """ gets one state and cities, or all states and outputs in html """
     if id:
+        state = None
         for x in st_list:
             if x.id == id:
-                return(render_template('9-states.html', state=x))
+                state = x
+        return(render_template('9-states.html', state=state))
     return(render_template('7-states_list.html', states_list=st_list))
 
 
