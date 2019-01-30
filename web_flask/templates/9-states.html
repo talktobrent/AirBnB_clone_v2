@@ -1,5 +1,6 @@
 {% extends "base.html" %}
-{% block body %} 
+{% block body %}
+		{% if state %}
 		<H1>State: {{ state.name }}:</H1>
 		<H3>Cities:</H3>
 		<UL>
@@ -7,4 +8,7 @@
 			<LI>{{ city.id }}: <B>{{ city.name }}</B></LI>
 		{% endfor %}
 		</UL>
+		{% else %}
+		<H1>Not Found!</H1>
+		{% endif %}
 {% endblock %}
